@@ -4,31 +4,31 @@ module SoftValidations
       base.extend ClassMethods
 			base.define_callbacks :soft_validate
     end
-  
-    # Returns true if there are no messages in the warnings collection. 
+
+    # Returns true if there are no messages in the warnings collection.
     def complete?
       warnings.clear
       run_callbacks :soft_validate
       warnings.empty?
     end
-  
+
     # Returns the warnings collection, an instance of Errors. The warnings collection is a
-    # different object than the errors collection. However, you can interact with the warnings 
+    # different object than the errors collection. However, you can interact with the warnings
     # collection in the same way that you interact with errors. For example:
-    # 
+    #
     #   employee.warnings.on(:first_name)
-    # 
+    #
     # A record can have errors and return false for valid? and yet
-    # at the same time have no warnings and return true for complete?. 
+    # at the same time have no warnings and return true for complete?.
     def warnings
       @warnings ||= ActiveRecord::Errors.new(self)
     end
-  
+
     module ClassMethods
-    
+
       # Adds a soft_validation method or block to the class. This provides a
-      # descriptive declaration of the object's desired state in order to be  
-      # considered complete. The methods or block passed to 
+      # descriptive declaration of the object's desired state in order to be
+      # considered complete. The methods or block passed to
       # soft_validate should add a message to the class's warning collection.
       #
       # Example with a symbol pointing to a method:
